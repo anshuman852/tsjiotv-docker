@@ -8,5 +8,5 @@ FROM php:7.4.30-apache-buster
 COPY --from=build /app /var/www/html
 COPY .htaccess /var/www/html
 WORKDIR /var/www/html
-RUN sed -i 's/\/tsjiotv//g' /var/www/html/playlist.php && sed -i 's/assets/assets\/data/g' /var/www/html/login2.php
+RUN sed -i 's/\/tsjiotv//g' /var/www/html/playlist.php && sed -i 's/assets/assets\/data/g' /var/www/html/login2.php && sed -i 's/http:/https:/g' playlist.php
 RUN chmod -R 777 /var/www/html
