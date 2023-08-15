@@ -1,7 +1,7 @@
 FROM ubuntu:latest AS build
 WORKDIR /app
 RUN apt-get update && apt-get install -y curl wget unzip
-RUN wget https://github.com/mitthu786/TS-JioTV/blob/main/tsjiotv.zip?raw=true -O tsjiotv.zip && \
+RUN wget https://github.com/mitthu786/TS-JioTV/blob/main/TS-JioTV.zip?raw=true -O tsjiotv.zip && \
     unzip tsjiotv.zip && \
     rm tsjiotv.zip
 FROM php:7.4.30-apache-buster
