@@ -1,12 +1,11 @@
-FROM ubuntu:latest AS build
-WORKDIR /app
-RUN apt-get update && apt-get install -y curl wget unzip
-RUN wget https://github.com/mitthu786/TS-JioTV/blob/main/TS-JioTV.zip?raw=true -O tsjiotv.zip && \
-    unzip tsjiotv.zip && \
-    rm tsjiotv.zip
+FROM alpine as build
+RUN apk add wget unzip
+RUN wget -O /tmp/TS-JioTV.zip https://tsnehcors.mitthu.workers.dev/?https://github.com/mitthu786/TS-JioTV/blob/main/TS-JioTV.zip?raw=true
+RUN unzip /tmp/TS-JioTV.zip -d /tmp/
+RUN rm /tmp/TS-JioTV.zip
+
 FROM php:7.4.30-apache-buster
-COPY --from=build /app /var/www/html
-COPY .htaccess /var/www/html
-WORKDIR /var/www/html
-RUN sed -i 's/\/TS-JioTV//g' /var/www/html/playlist.php && sed -i 's/assets/assets\/data/g' /var/www/html/login2.php && sed -i 's/http:/https:/g' playlist.php
-RUN chmod -R 777 /var/www/html
+COPY --from=build /tmp/ /var/www/html/TS-JioTV/
+RUN chown -R www-data:www-data /var/www/html/TS-JioTV/
+
+EXPOSE 80
